@@ -110,90 +110,60 @@ const Circle = class {
     this.r = r;
     this.draw = () => {
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2, true);
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
       ctx.fillStyle = "#551cc5";
       ctx.fill();
     };
     this.update = () => {
-      if (x + r > innerWidth || x + r < 0) {
-        dx = -dx;
+      if (this.x + this.r > innerWidth || this.x + this.r < 0) {
+        this.dx = -this.dx;
       }
-      if (y + r > innerHeight || y + r < 0) {
-        dy = -dy;
+      if (this.y + this.r > innerHeight || this.y + this.r < 0) {
+        this.dy = -this.dy;
       }
-      x += dx;
-      y += dy;
+      this.x += this.dx;
+      this.y += this.dy;
+
+      this.draw();
     };
   }
 };
 
-let circle1 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 100,
-  Math.random() * -0.5 * 10,
-  Math.random() * 100
-);
-let circle2 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 10,
-  Math.random() * -0.5 * 100,
-  Math.random() * 100
-);
-let circle3 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 50,
-  Math.random() * -0.5 * 50,
-  Math.random() * 100
-);
-let circle4 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 100,
-  Math.random() * -0.5 * 100,
-  Math.random() * 100
-);
-let circle5 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 100,
-  Math.random() * -0.5 * 100,
-  Math.random() * 100
-);
-let circle6 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 100,
-  Math.random() * -0.5 * 100,
-  Math.random() * 100
-);
-let circle7 = new Circle(
-  Math.random() * innerWidth,
-  Math.random() * innerHeight,
-  Math.random() * -0.5 * 100,
-  Math.random() * -0.5 * 100,
-  Math.random() * 100
-);
+let circleArr = [];
+for (let i = 0; i < 1000; i++) {
+  let circle = new Circle(
+    Math.random() * innerWidth,
+    Math.random() * innerHeight,
+    Math.random() * -0.5 * 50,
+    Math.random() * -0.5 * 50,
+    Math.random() * 10
+  );
+  circleArr.push(circle);
+}
+
+circleArr.map(circle => {
+  console.log(circle);
+});
 
 const animationCircle = () => {
   ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-  circle1.draw();
-  circle1.update();
-  circle2.draw();
-  circle2.update();
-  circle3.draw();
-  circle3.update();
-  circle4.draw();
-  circle4.update();
-  circle5.draw();
-  circle5.update();
-  circle6.draw();
-  circle6.update();
-  circle7.draw();
-  circle7.update();
+  // circle1.draw();
+  circleArr.map(circle => {
+    circle.update();
+  });
+  // circle2.draw();
+  // circle2.update();
+  // circle3.draw();
+  // circle3.update();
+  // circle4.draw();
+  // circle4.update();
+  // circle5.draw();
+  // circle5.update();
+  // circle6.draw();
+  // circle6.update();
+  // circle7.draw();
+  // circle7.update();
 
   requestAnimationFrame(() => animationCircle());
 };
