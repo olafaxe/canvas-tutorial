@@ -102,16 +102,17 @@ console.dir(window);
 // ctx.stroke();
 
 const Circle = class {
-  constructor(x, y, dx, dy, r) {
+  constructor(x, y, dx, dy, r, color) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
     this.r = r;
+    this.color = color;
     this.draw = () => {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
-      ctx.fillStyle = "#551cc5";
+      ctx.fillStyle = this.color;
       ctx.fill();
     };
     this.update = () => {
@@ -129,6 +130,15 @@ const Circle = class {
   }
 };
 
+const randomNumber = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomByte = () => randomNumber(0, 255);
+const randomPercent = () => (randomNumber(50, 100) * 0.01).toFixed(2);
+const randomCssRgba = () =>
+  `rgba(${[randomByte(), randomByte(), randomByte(), randomPercent()].join(
+    ","
+  )})`;
+
 let circleArr = [];
 for (let i = 0; i < 1000; i++) {
   let circle = new Circle(
@@ -136,7 +146,8 @@ for (let i = 0; i < 1000; i++) {
     Math.random() * innerHeight,
     Math.random() * -0.5 * 50,
     Math.random() * -0.5 * 50,
-    Math.random() * 10
+    Math.random() * 10,
+    randomCssRgba()
   );
   circleArr.push(circle);
 }
@@ -152,97 +163,8 @@ const animationCircle = () => {
   circleArr.map(circle => {
     circle.update();
   });
-  // circle2.draw();
-  // circle2.update();
-  // circle3.draw();
-  // circle3.update();
-  // circle4.draw();
-  // circle4.update();
-  // circle5.draw();
-  // circle5.update();
-  // circle6.draw();
-  // circle6.update();
-  // circle7.draw();
-  // circle7.update();
 
   requestAnimationFrame(() => animationCircle());
 };
 
 animationCircle();
-// const animationCircleForwardX = (x, y) => {
-//   ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-//   let newX = x + acc;
-//   let newY = y;
-//   if (newX + r > canvas.width) {
-//     animationCircleDownwardY(newX, newY);
-//     return;
-//   }
-
-//   ctx.beginPath();
-//   ctx.arc(newX, newY, r, 0, Math.PI * 2, true);
-//   ctx.strokeStyle = "#000000";
-//   ctx.stroke();
-//   requestAnimationFrame(() => {
-//     animationCircleForwardX(newX, newY);
-//   });
-// };
-// const animationCircleDownwardY = (x, y) => {
-//   ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-//   let newX = x;
-//   let newY = y + acc;
-//   if (newY + r > canvas.height) {
-//     animationCircleBackwardX(newX, newY);
-//     return;
-//   }
-
-//   ctx.beginPath();
-//   ctx.arc(newX, newY, r, 0, Math.PI * 2, true);
-//   ctx.strokeStyle = "#000000";
-//   ctx.stroke();
-//   requestAnimationFrame(() => {
-//     animationCircleDownwardY(newX, newY);
-//   });
-// };
-
-// const animationCircleBackwardX = (x, y) => {
-//   ctx.clearRect(0, 0, innerWidth, innerHeight);
-//   let newX = x - acc;
-//   let newY = y;
-//   if (newX - r < 0) {
-//     animationCircleUpwardY(newX, newY);
-//     return;
-//   }
-
-//   ctx.beginPath();
-//   ctx.arc(newX, newY, r, 0, Math.PI * 2, true);
-//   ctx.strokeStyle = "#000000";
-//   ctx.stroke();
-//   requestAnimationFrame(() => {
-//     animationCircleBackwardX(newX, newY);
-//   });
-// };
-
-// const animationCircleUpwardY = (x, y) => {
-//   ctx.clearRect(0, 0, innerWidth, innerHeight);
-//   let newX = x;
-//   let newY = y - acc;
-//   if (newY - r < 0) {
-//     animationCircleForwardX(newX, newY);
-//     return;
-//   }
-
-//   ctx.beginPath();
-//   ctx.arc(newX, newY, r, 0, Math.PI * 2, true);
-//   ctx.strokeStyle = "#000000";
-//   ctx.stroke();
-//   requestAnimationFrame(() => {
-//     animationCircleUpwardY(newX, newY);
-//   });
-// };
-
-// animationCircleForwardX(0, 0);
-
-// console.log(innerHeight);
-// console.log(window.innerWidth);
